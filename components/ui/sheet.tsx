@@ -16,8 +16,9 @@ const SheetPortal = ({
   className,
   children,
   ...props
-}: SheetPrimitive.DialogPortalProps) => (
+}: SheetPrimitive.DialogPortalProps & { className: string }) => (
   <SheetPrimitive.Portal
+    //@ts-ignore
     className={cn('fixed inset-0 z-50 flex', className)}
     {...props}
   >
@@ -45,6 +46,7 @@ const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
+  // @ts-ignore
   <SheetPortal>
     <SheetPrimitive.Content
       ref={ref}
