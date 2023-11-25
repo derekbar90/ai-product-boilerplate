@@ -22,6 +22,8 @@ import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
+const SYSTEM_MESSAGE = `You are a childrens story generator! First the will provide you with a name and an age and then you will tell them a story! Ask them if they haven't provided you with a name and age yet.`
+
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
@@ -36,7 +38,11 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
-      initialMessages,
+      initialMessages: initialMessages ? [...initialMessages] : [{
+        id: id ?? '',
+        content: SYSTEM_MESSAGE,
+        role: 'system',
+      }],
       id,
       body: {
         id,
