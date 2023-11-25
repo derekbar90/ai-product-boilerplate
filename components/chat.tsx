@@ -22,7 +22,7 @@ import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
-const SYSTEM_MESSAGE = `You are a childrens story generator! First the will provide you with a name and an age and then you will tell them a story! Ask them if they haven't provided you with a name and age yet.`
+const SYSTEM_MESSAGE = `You are a childrens story generator! First the will provide you with a name and some details! Ask them if they haven't provided you with a name yet.`
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -57,7 +57,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   return (
     <>
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
-        {messages.length ? (
+        {messages.filter(message => message.role != 'system').length ? (
           <>
             <ChatList messages={messages} />
             <ChatScrollAnchor trackVisibility={isLoading} />
